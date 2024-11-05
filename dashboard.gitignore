@@ -9,6 +9,7 @@ venv/
 # Ignore media files if not for public sharing
 media/
 uploads/
+notes/
 
 # Ignore Django secret key file
 *.env
