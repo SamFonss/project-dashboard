@@ -1,0 +1,5 @@
+java
+Copy code
+Python 3.8+
+Flask
+Git for version control
