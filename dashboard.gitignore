@@ -1,0 +1,18 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Ignore virtual environment folder
+venv/
+
+# Ignore media files if not for public sharing
+media/
+uploads/
+
+# Ignore Django secret key file
+*.env
+
+# Ignore system files
+.DS_Store
+Thumbs.db

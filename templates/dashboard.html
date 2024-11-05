@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<title>Project Dashboard</title>
+</head>
+<body>
+
+<!--
+    This template displays the dashboard page.
+    Organized by project, this shows recent commits, features links to each project, and has a notes field for user-defined next steps.
+-->
+
+    	1<h1>Project Dashboard</h1>
+
+    	<!-- Music Streaming Project Section -->
+    	<div class="project">
+        	<h2>Music Streaming Project</h2>
+        	<h3>Recent Commits</h3>
+        	<ul>
+            		{% for commit in commits %}
+            		<li>{{ commit['commit']['message'] }} - {{ commit['commit']['author']['date'] }}</li>
+            		{% endfor %}
+        	</ul>
+        	<p>
+            		<a href="http://localhost:8000/login">Go to Music Streaming Site</a>
+        	</p>
+
+        	<h3>Next Steps</h3>
+        	<!-- Wrap textarea in a form to ensure saving (could forget to click out of form, definitely wont forget to click save) -->
+        	<form action="/save_notes" method="POST">
+            		<input type="hidden" name="project" value="0">  
+            		<textarea name="notes" class="next-steps" rows="5" cols="50" placeholder="Document your next steps here...">{{ project_notes[0] }}</textarea>
+            		<button type="submit">Save Notes</button>
+        	</form>
+    	</div>
+
+    	<!-- Future Projects Sections -->
+    	<div class="project">
+        	<h2>Future Project 1</h2>
+        	<h3>Recent Commits</h3>
+        	<ul>
+            		<li>No commits yet.</li>
+        	</ul>
+        	<p>
+            		<a href="#">Link to Future Project 1</a>
+        	</p>
+
+        	<h3>Next Steps</h3>
+        	<!-- Form wrapper -->
+        	<form action="/save_notes" method="POST">
+            		<input type="hidden" name="project" value="1">  
+            		<textarea name="notes" class="next-steps" rows="5" cols="50" placeholder="Document your next steps here...">{{ project_notes[1] }}</textarea>
+            		<button type="submit">Save Notes</button>
+        	</form>
+    	</div>
+
+    	<div class="project">
+        	<h2>Future Project 2</h2>
+        	<h3>Recent Commits</h3>
+        	<ul>
+            <li>No commits yet.</li>
+        	</ul>
+        	<p>
+            <a href="#">Link to Future Project 2</a>
+        	</p>
+
+        	<h3>Next Steps</h3>
+        	<!-- Form wrapper -->
+        	<form action="/save_notes" method="POST">
+            		<input type="hidden" name="project" value="2">  
+            		<textarea name="notes" class="next-steps" rows="5" cols="50" placeholder="Document your next steps here...">{{ project_notes[2] }}</textarea>
+            		<button type="submit">Save Notes</button>
+        	</form>
+    	</div>
+
+    	<script>
+        <!-- Saves notes when user clicks out of form after changing -->
+        	document.querySelectorAll('.next-steps').forEach((textarea, index) => {
+            		textarea.addEventListener('change', function() {
+                		fetch('/save_notes', {
+                    			method: 'POST',
+                    			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    			body: 'notes=' + encodeURIComponent(this.value) + '&project=' + index
+                		});
+            		});
+        	});
+    	</script>
+</body>
+</html>
