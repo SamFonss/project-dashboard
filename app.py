@@ -19,11 +19,18 @@ def get_commits(repo):
 # Endpoint to save notes
 @app.route('/save_notes', methods=['POST'])
 def save_notes():
+    
+    notes_dir = "notes"
+    
+    # Ensure the directory exists
+    if not os.path.exists(notes_dir):
+        os.makedirs(notes_dir)
+
     notes = request.form.get('notes')
     project_index = request.form.get('project')  # Project index from the form
     
     # Saves notes to a file
-    filename = f'project_{project_index}_notes.txt'
+    filename = os.path.join(notes_dir, f'project_{project_index}_notes.txt')
     with open(filename, 'w') as file:
         file.write(notes)
     
@@ -31,7 +38,10 @@ def save_notes():
 
 # Loads notes from a file
 def load_notes(project_index):
-    filename = f'project_{project_index}_notes.txt'
+    
+    notes_dir = "notes"
+   
+    filename = os.path.join(notes_dir, f'project_{project_index}_notes.txt')
     if os.path.exists(filename):
         with open(filename, 'r') as file:
             return file.read()
